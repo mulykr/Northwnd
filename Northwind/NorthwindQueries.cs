@@ -67,6 +67,12 @@ namespace Northwnd
             ExecuteQuery(query);
         }
 
+        public void Q30()
+        {
+            var query = "SELECT DISTINCT e.City EmployeeCity, c.City CustomerCity, o.ShipCity FROM Orders o JOIN Employees e ON e.EmployeeID = o.EmployeeID JOIN Customers c ON c.CustomerID = o.CustomerID";
+            ExecuteQuery(query);
+        }
+
 
         public void Dispose()
         {
