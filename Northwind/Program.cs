@@ -15,6 +15,7 @@
             ui.Add(queries.Q11, "Show the list of all cities where the employees are from");
             ui.Add(queries.Q13, "Show first and last names of the employees who used to serve orders shipped to Madrid.");
             ui.Add(queries.Q14, "Show first and last names of the employees as well as the count of orders each of them have received during the year 1997 ");
+            ui.Add(queries.Q17, "Show the count of orders made by each customer from France.");
             ui.Add(queries.Q30, "Show the list of cities where employees and customers are from and where orders have been made to. Duplicates should be eliminated.");
             ui.Add(queries.Q33, "Change the City field in one of your records using the UPDATE statement.");
             ui.Add(queries.Q35, "Delete one of records");

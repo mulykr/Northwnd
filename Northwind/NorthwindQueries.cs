@@ -55,6 +55,12 @@ namespace Northwnd
             ExecuteQuery(query);
         }
 
+        public void Q17()
+        {
+            var query = "SELECT c.ContactName, COUNT(o.OrderID) Count FROM Customers c JOIN Orders o ON c.CustomerID=o.CustomerID WHERE c.Country='France' GROUP BY c.ContactName";
+            ExecuteQuery(query);
+        }
+
         public void Q13()
         {
             var query = "SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = 'Madrid'";
