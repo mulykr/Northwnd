@@ -73,6 +73,18 @@ namespace Northwnd
             ExecuteQuery(query);
         }
 
+        public void Q15()
+        {
+            var query = "SELECT e.FirstName, e.LastName, COUNT(o.OrderID) Count FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.OrderDate >= '19970101' AND o.OrderDate <= '19971231' GROUP BY e.FirstName, e.LastName";
+            ExecuteQuery(query);
+        }
+
+        public void Q19()
+        {
+            var query = "SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = 'France' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > 10";
+            ExecuteQuery(query);
+        }
+
         public void Q30()
         {
             var query = "SELECT DISTINCT e.City EmployeeCity, c.City CustomerCity, o.ShipCity FROM Orders o JOIN Employees e ON e.EmployeeID = o.EmployeeID JOIN Customers c ON c.CustomerID = o.CustomerID";
