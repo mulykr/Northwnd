@@ -46,25 +46,33 @@ namespace Northwnd
 
         public void Launch()
         {
-            int key = -1;
-            do
+            try
             {
-                ShowMenu();
-                key = int.Parse(Console.ReadLine());
-                if (_actions.Count(item => item.Key == key) != 0)
+                int key = -1;
+                do
                 {
-                    _actions.First(item => item.Key == key).Invoke();
+                    ShowMenu();
+                    key = int.Parse(Console.ReadLine());
+                    if (_actions.Count(item => item.Key == key) != 0)
+                    {
+                        _actions.First(item => item.Key == key).Invoke();
+                    }
+                    else if (key == _finishAction)
+                    {
+                        Console.WriteLine("Bye ;)");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Incorrect action...");
+                    }
                 }
-                else if (key == _finishAction)
-                {
-                    Console.WriteLine("Bye ;)");
-                }
-                else
-                {
-                    Console.WriteLine("Incorrect action...");
-                }
+                while (key != _finishAction);
             }
-            while (key != _finishAction);
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: " + e.Message);
+                Launch();
+            }
         }
 
         private void ShowMenu()
