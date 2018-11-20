@@ -67,6 +67,20 @@ namespace Northwnd
             ExecuteQuery(query);
         }
 
+        public void Q30()
+        {
+            var query = "SELECT DISTINCT e.City EmployeeCity, c.City CustomerCity, o.ShipCity FROM Orders o JOIN Employees e ON e.EmployeeID = o.EmployeeID JOIN Customers c ON c.CustomerID = o.CustomerID";
+            ExecuteQuery(query);
+        }
+
+        public void Q33()
+        {
+            var query = "UPDATE Employees SET City = 'Lviv' WHERE EmployeeID = 1";
+            var command = new SqlCommand(query, _connection);
+            var result = command.ExecuteNonQuery();
+
+            Console.WriteLine($"Row(s) affected: {result}");
+        }
 
         public void Dispose()
         {
