@@ -73,6 +73,23 @@ namespace Northwnd
             ExecuteQuery(query);
         }
 
+        public void Q33()
+        {
+            var query = "UPDATE Employees SET City = 'Lviv' WHERE EmployeeID = 1";
+            var command = new SqlCommand(query, _connection);
+            var result = command.ExecuteNonQuery();
+
+            Console.WriteLine($"Row(s) affected: {result}");
+        }
+
+        public void Q35()
+        {
+            var query = "DELETE FROM Employees WHERE EmployeeID = 2";
+            var command = new SqlCommand(query, _connection);
+            var result = command.ExecuteNonQuery();
+
+            Console.WriteLine($"Row(s) affected: {result}");
+        }
 
         public void Dispose()
         {
