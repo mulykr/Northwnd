@@ -61,6 +61,12 @@ namespace Northwnd
             ExecuteQuery(query);
         }
 
+        public void Q14()
+        {
+            var query = "SELECT e.FirstName, e.LastName, COUNT(o.OrderID) Count FROM Employees e LEFT JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.OrderDate >= '19970101' AND o.OrderDate <= '19971231' GROUP BY e.FirstName, e.LastName";
+            ExecuteQuery(query);
+        }
+
 
         public void Dispose()
         {

@@ -14,7 +14,7 @@
             ui.Add(queries.Q10, "Show first, last names and ages of 3 eldest employees.");
             ui.Add(queries.Q11, "Show the list of all cities where the employees are from");
             ui.Add(queries.Q13, "Show first and last names of the employees who used to serve orders shipped to Madrid.");
-
+            ui.Add(queries.Q14, "Show first and last names of the employees as well as the count of orders each of them have received during the year 1997 ");
             ui.Launch();
         }
     }
