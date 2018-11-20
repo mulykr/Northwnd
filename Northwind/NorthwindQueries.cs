@@ -20,7 +20,7 @@ namespace Northwnd
             var query = "SELECT * FROM Employees WHERE EmployeeID = 8";
             ExecuteQuery(query);
         }
-
+        
         public void Q2()
         {
             var query = "SELECT LastName, FirstName FROM Employees WHERE City='London'";
@@ -32,6 +32,35 @@ namespace Northwnd
             var query = "SELECT LastName, FirstName FROM Employees WHERE FirstName LIKE 'A%'";
             ExecuteQuery(query);
         }
+
+        public void Q5()
+        {
+            var query = "SELECT COUNT(*) FROM Employees WHERE City='London'";
+            ExecuteQuery(query);
+        }
+        public void Q9()
+        {
+            var query = "SELECT LastName, FirstName  FROM Employees WHERE BirthDate=(Select MIN(BirthDate) From Employees)";
+            ExecuteQuery(query);
+        }
+        public void Q10()
+        {
+            var query = "SELECT TOP 3 LastName, FirstName  FROM Employees ORDER BY BirthDate DESC";
+            ExecuteQuery(query);
+        }
+
+        public void Q11()
+        {
+            var query = "SELECT DISTINCT City FROM Employees";
+            ExecuteQuery(query);
+        }
+
+        public void Q13()
+        {
+            var query = "SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = 'Madrid'";
+            ExecuteQuery(query);
+        }
+
 
         public void Dispose()
         {
