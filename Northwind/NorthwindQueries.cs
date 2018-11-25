@@ -62,16 +62,16 @@ namespace Northwnd
             return query;
         }
 
-        public string Q17()
+        public string Q17(string country="France")
         {
-            var query = "SELECT c.ContactName, COUNT(o.OrderID) Count FROM Customers c JOIN Orders o ON c.CustomerID=o.CustomerID WHERE c.Country='France' GROUP BY c.ContactName";
+            var query = $"SELECT c.ContactName, COUNT(o.OrderID) Count FROM Customers c JOIN Orders o ON c.CustomerID=o.CustomerID WHERE c.Country='{country}' GROUP BY c.ContactName";
             ExecuteQuery(query);
             return query;
         }
 
-        public string Q13()
+        public string Q13(string city="Madrid")
         {
-            var query = "SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = 'Madrid'";
+            var query = $"SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = '{city}'";
             ExecuteQuery(query);
             return query;
         }
@@ -90,9 +90,9 @@ namespace Northwnd
             return query;
         }
 
-        public string Q19()
+        public string Q19(string country="France")
         {
-            var query = "SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = 'France' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > 10";
+            var query = $"SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = '{country}' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > 10";
             ExecuteQuery(query);
             return query;
         }
@@ -104,9 +104,9 @@ namespace Northwnd
             return query;
         }
 
-        public string Q33()
+        public string Q33(string city="Lviv")
         {
-            var query = "UPDATE Employees SET City = 'Lviv' WHERE EmployeeID = 1";
+            var query = $"UPDATE Employees SET City = '{city}' WHERE EmployeeID = 1";
             var command = new SqlCommand(query, _connection);
             var result = command.ExecuteNonQuery();
 
