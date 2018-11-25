@@ -10,35 +10,35 @@ namespace Northwnd
 
         public NorthwndQueries(string connectionString)
         {
-            _connectionString = connectionString;// "Data source=RM-DESKTOP\\SQLEXPRESS; Initial catalog=NORTHWND;Integrated security=true";
+            _connectionString = connectionString;
             _connection = new SqlConnection(_connectionString);
             _connection.Open();
         }
 
-        public string Q1()
+        public string Q1(int id = 8)
         {
-            var query = "SELECT * FROM Employees WHERE EmployeeID = 8";
+            var query = $"SELECT * FROM Employees WHERE EmployeeID = {id}";
             ExecuteQuery(query);
             return query;
         }
         
-        public string Q2()
+        public string Q2(string city = "London")
         {
-            var query = "SELECT LastName, FirstName FROM Employees WHERE City='London'";
+            var query = $"SELECT LastName, FirstName FROM Employees WHERE City='{city}'";
             ExecuteQuery(query);
             return query;
         }
 
-        public string Q3()
+        public string Q3(string condition = "A%")
         {
-            var query = "SELECT LastName, FirstName FROM Employees WHERE FirstName LIKE 'A%'";
+            var query = $"SELECT LastName, FirstName FROM Employees WHERE FirstName LIKE '{condition}'";
             ExecuteQuery(query);
             return query;
         }
 
-        public string Q5()
+        public string Q5(string city = "London")
         {
-            var query = "SELECT COUNT(*) FROM Employees WHERE City='London'";
+            var query = $"SELECT COUNT(*) FROM Employees WHERE City='{city}'";
             ExecuteQuery(query);
             return query;
         }
