@@ -10,11 +10,11 @@ namespace Northwnd
     {
         public int Key { get; set; }
         public string Info { get; set; }
-        public Action Action { get; set; }
+        public Func<string> Action { get; set; }
 
-        public void Invoke()
+        public string Invoke()
         {
-            Action?.Invoke();
+            return Action?.Invoke();
         }
     }
 
@@ -30,7 +30,7 @@ namespace Northwnd
             _finishAction = 1;
         }
 
-        public void Add(Action action, string info)
+        public void Add(Func<string> action, string info)
         {
             if (action != null)
             {

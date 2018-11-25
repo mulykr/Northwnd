@@ -8,105 +8,120 @@ namespace Northwnd
         private string _connectionString;
         private SqlConnection _connection;
 
-        public NorthwndQueries()
+        public NorthwndQueries(string connectionString)
         {
-            _connectionString = "Data source=LAPTOP-D9N84HG1\\SQLEXPRESS; Initial catalog=NORTHWND;Integrated security=true";
+            _connectionString = connectionString;// "Data source=RM-DESKTOP\\SQLEXPRESS; Initial catalog=NORTHWND;Integrated security=true";
             _connection = new SqlConnection(_connectionString);
             _connection.Open();
         }
 
-        public void Q1()
+        public string Q1()
         {
             var query = "SELECT * FROM Employees WHERE EmployeeID = 8";
             ExecuteQuery(query);
+            return query;
         }
         
-        public void Q2()
+        public string Q2()
         {
             var query = "SELECT LastName, FirstName FROM Employees WHERE City='London'";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q3()
+        public string Q3()
         {
             var query = "SELECT LastName, FirstName FROM Employees WHERE FirstName LIKE 'A%'";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q5()
+        public string Q5()
         {
             var query = "SELECT COUNT(*) FROM Employees WHERE City='London'";
             ExecuteQuery(query);
+            return query;
         }
-        public void Q9()
+        public string Q9()
         {
             var query = "SELECT LastName, FirstName  FROM Employees WHERE BirthDate=(Select MIN(BirthDate) From Employees)";
             ExecuteQuery(query);
+            return query;
         }
-        public void Q10()
+        public string Q10()
         {
             var query = "SELECT TOP 3 LastName, FirstName  FROM Employees ORDER BY BirthDate DESC";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q11()
+        public string Q11()
         {
             var query = "SELECT DISTINCT City FROM Employees";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q17()
+        public string Q17()
         {
             var query = "SELECT c.ContactName, COUNT(o.OrderID) Count FROM Customers c JOIN Orders o ON c.CustomerID=o.CustomerID WHERE c.Country='France' GROUP BY c.ContactName";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q13()
+        public string Q13()
         {
             var query = "SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = 'Madrid'";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q14()
+        public string Q14()
         {
             var query = "SELECT e.FirstName, e.LastName, COUNT(o.OrderID) Count FROM Employees e LEFT JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.OrderDate >= '19970101' AND o.OrderDate <= '19971231' GROUP BY e.FirstName, e.LastName";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q15()
+        public string Q15()
         {
             var query = "SELECT e.FirstName, e.LastName, COUNT(o.OrderID) Count FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.OrderDate >= '19970101' AND o.OrderDate <= '19971231' GROUP BY e.FirstName, e.LastName";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q19()
+        public string Q19()
         {
             var query = "SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = 'France' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > 10";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q30()
+        public string Q30()
         {
             var query = "SELECT DISTINCT e.City EmployeeCity, c.City CustomerCity, o.ShipCity FROM Orders o JOIN Employees e ON e.EmployeeID = o.EmployeeID JOIN Customers c ON c.CustomerID = o.CustomerID";
             ExecuteQuery(query);
+            return query;
         }
 
-        public void Q33()
+        public string Q33()
         {
             var query = "UPDATE Employees SET City = 'Lviv' WHERE EmployeeID = 1";
             var command = new SqlCommand(query, _connection);
             var result = command.ExecuteNonQuery();
 
             Console.WriteLine($"Row(s) affected: {result}");
+            return query;
         }
 
-        public void Q35()
+        public string Q35()
         {
             var query = "DELETE FROM Employees WHERE EmployeeID = 2";
             var command = new SqlCommand(query, _connection);
             var result = command.ExecuteNonQuery();
 
             Console.WriteLine($"Row(s) affected: {result}");
+            return query;
         }
 
         public void Dispose()

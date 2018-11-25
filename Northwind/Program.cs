@@ -1,10 +1,12 @@
-﻿namespace Northwnd
+﻿using System.Configuration;
+
+namespace Northwnd
 {
     class Program
     {
         static void Main(string[] args)
         {
-            NorthwndQueries queries = new NorthwndQueries();
+            NorthwndQueries queries = new NorthwndQueries(ConfigurationManager.AppSettings["connectionString"]);
             NorthwndConsoleUi ui = new NorthwndConsoleUi();
             ui.Add(queries.Q1, "Show all info about the employee with ID 8.");
             ui.Add(queries.Q2, "Show the list of first and last names of the employees from London.");
@@ -21,7 +23,10 @@
             ui.Add(queries.Q30, "Show the list of cities where employees and customers are from and where orders have been made to. Duplicates should be eliminated.");
             ui.Add(queries.Q33, "Change the City field in one of your records using the UPDATE statement.");
             ui.Add(queries.Q35, "Delete one of records");
-            ui.Launch();
+            using (queries)
+            {
+                ui.Launch();
+            }
         }
     }
 }
