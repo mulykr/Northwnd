@@ -51,11 +51,40 @@ namespace NorthwindTests
            
         }
 
+        [TestMethod]
+        public void Q10()
+        {
+            var q = _queries.Q10();
+            var res = ExecuteQuery(q, "LastName", "FirstName");
+            Assert.AreEqual(3, res.Count);
+            Assert.AreEqual(res["Leverling"], "Janet");
+            Assert.AreEqual(res["Dodsworth"], "Anne");
+            Assert.AreEqual(res["Suyama"], "Michael");
+
+
+        }
+
+        [TestMethod]
+        public void Q11()
+        {
+            var q = _queries.Q11();
+            var res = ExecuteQuery(q, "City" );
+            Assert.AreEqual(5, res.Count);
+            Assert.AreEqual("Kirkland",res[0]);
+            Assert.AreEqual("London", res[1]);
+            Assert.AreEqual("Redmond", res[2]);
+            Assert.AreEqual("Seattle", res[3]);
+            Assert.AreEqual("Tacoma", res[4]);
+
+
+
+
+        }
         //[TestMethod]
         //public void Q5()
         //{
         //    var q = _queries.Q5();
-           
+
         //    var res = ExecuteQuery(q);
 
         //   // var res = GetRowsAffected(q);
