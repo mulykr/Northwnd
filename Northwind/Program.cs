@@ -20,7 +20,6 @@ namespace Northwnd
             ui.Add(() => queries.Q19(), "Show the list of french customers’ names who have made more than one order");
             ui.Add(() => queries.Q30(), "Show the list of cities where employees and customers are from and where orders have been made to. Duplicates should be eliminated.");
             ui.Add(() => queries.Q33(), "Change the City field in one of your records using the UPDATE statement.");
-            ui.Add(() => queries.Q35(), "Delete one of records");
             using (queries)
             {
                 ui.Launch();

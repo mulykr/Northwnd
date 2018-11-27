@@ -52,6 +52,16 @@ namespace NorthwindTests
         }
 
         [TestMethod]
+        public void Q5()
+        {
+            var q = _queries.Q5();
+            var command = new SqlCommand(q, _connection);
+            var res = command.ExecuteScalar();
+            Assert.AreEqual(4, res);
+
+        }
+
+        [TestMethod]
         public void Q10()
         {
             var q = _queries.Q10();
@@ -60,8 +70,6 @@ namespace NorthwindTests
             Assert.AreEqual(res["Leverling"], "Janet");
             Assert.AreEqual(res["Dodsworth"], "Anne");
             Assert.AreEqual(res["Suyama"], "Michael");
-
-
         }
 
         [TestMethod]
@@ -75,22 +83,8 @@ namespace NorthwindTests
             Assert.AreEqual("Redmond", res[2]);
             Assert.AreEqual("Seattle", res[3]);
             Assert.AreEqual("Tacoma", res[4]);
-
-
-
-
         }
-        //[TestMethod]
-        //public void Q5()
-        //{
-        //    var q = _queries.Q5();
-
-        //    var res = ExecuteQuery(q);
-
-        //   // var res = GetRowsAffected(q);
-
-        //    Assert.AreEqual(4, res);
-        //}
+        
         public List<object> ExecuteQuery(string query, string ordinal)
         {
             var command = new SqlCommand(query, _connection);
@@ -103,30 +97,7 @@ namespace NorthwindTests
 
             return objs;
         }
-        //public int ExecuteQuery(string query)
-        //{
-        //    var command = new SqlCommand(query, _connection);
-        //    var reader = command.ExecuteReader();
-        //    var objs = new List<object>();
-        //    int y = 0;
-        //    var h;
-        //    while (reader.Read())
-        //    {
-        //       h=reader.GetValue(reader.GetOrdinal("Count"));
-
-        //    }
-        //    y=Int32.Parse(h);
-        //    return y;
-        //}
-        //public var ExecuteQuery(string query)
-        //{
-        //    var command = new SqlCommand(query, _connection);
-        //    var reader = command.ExecuteReader();
-        //    var objs = reader.GetValue();
-        //    return objs;
-
-        //}
-
+       
         public Dictionary<object,object> ExecuteQuery(string query, string ordinal, string ordinal2)
         {
             var command = new SqlCommand(query, _connection);

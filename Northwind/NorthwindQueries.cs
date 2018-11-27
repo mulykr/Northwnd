@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 
 namespace Northwnd
 {
@@ -14,32 +16,49 @@ namespace Northwnd
             _connection = new SqlConnection(_connectionString);
             _connection.Open();
         }
-
         public string Q1(int id = 8)
         {
-            var query = $"SELECT * FROM Employees WHERE EmployeeID = {id}";
-            ExecuteQuery(query);
+            var query = "SELECT * FROM Employees WHERE EmployeeID = @id";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@id", id } });
             return query;
         }
-        
+
         public string Q2(string city = "London")
         {
-            var query = $"SELECT LastName, FirstName FROM Employees WHERE City='{city}'";
-            ExecuteQuery(query);
+            var query = "SELECT LastName, FirstName FROM Employees WHERE City= @city";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@city", city } });
             return query;
         }
+
+
+        //public string Q1(int id = 8)
+        //{
+        //    var query = $"SELECT * FROM Employees WHERE EmployeeID = {id}";
+        //    ExecuteQuery(query);
+        //    return query;
+        //}
+
+        //public string Q2(string city = "London")
+        //{
+        //    var query = $"SELECT LastName, FirstName FROM Employees WHERE City='{city}'";
+        //    ExecuteQuery(query);
+        //    return query;
+        //}
 
         public string Q3(string condition = "A%")
         {
-            var query = $"SELECT LastName, FirstName FROM Employees WHERE FirstName LIKE '{condition}'";
-            ExecuteQuery(query);
+            var query = "SELECT LastName, FirstName FROM Employees WHERE FirstName LIKE @condition";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@condition", condition } });
+
+
             return query;
         }
 
         public string Q5(string city = "London")
         {
-            var query = $"SELECT COUNT(*) AS Count FROM Employees WHERE City='{city}'";
-            ExecuteQuery(query);
+            var query = "SELECT COUNT(*) AS Count FROM Employees WHERE City=@city";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@city", city } });
+
             return query;
         }
         public string Q9()
@@ -64,22 +83,23 @@ namespace Northwnd
 
         public string Q17(string country="France")
         {
-            var query = $"SELECT c.ContactName, COUNT(o.OrderID) Count FROM Customers c JOIN Orders o ON c.CustomerID=o.CustomerID WHERE c.Country='{country}' GROUP BY c.ContactName";
-            ExecuteQuery(query);
+            var query = "SELECT c.ContactName, COUNT(o.OrderID) Count FROM Customers c JOIN Orders o ON c.CustomerID=o.CustomerID WHERE c.Country=@country GROUP BY c.ContactName";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@country", country } });
+
             return query;
         }
 
         public string Q13(string city="Madrid")
         {
-            var query = $"SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = '{city}'";
-            ExecuteQuery(query);
+            var query = "SELECT FirstName, LastName FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.ShipCity = @city";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@city", city } });
             return query;
         }
 
         public string Q19(string country="France", int count =10)
         {
-            var query = $"SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = '{country}' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > {count}";
-            ExecuteQuery(query);
+            var query = "SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = @country WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > @count";
+            ExecuteQuery(query, new Dictionary<string, object> { { "@country", country },{ "@count", count } });
             return query;
         }
 
@@ -92,23 +112,18 @@ namespace Northwnd
 
         public string Q33(string city="Lviv", int id=1)
         {
-            var query = $"UPDATE Employees SET City = '{city}' WHERE EmployeeID = {id}";
+            var query = $"UPDATE Employees SET City = @city WHERE EmployeeID = @id";
             var command = new SqlCommand(query, _connection);
+            command.Parameters.AddWithValue(" @city", city);
+            command.Parameters.AddWithValue(" @id", id);
+
             var result = command.ExecuteNonQuery();
 
             Console.WriteLine($"Row(s) affected: {result}");
             return query;
         }
 
-        public string Q35(int id = 2)
-        {
-            var query = "DELETE FROM Employees WHERE EmployeeID = {id}";
-            var command = new SqlCommand(query, _connection);
-            var result = command.ExecuteNonQuery();
-
-            Console.WriteLine($"Row(s) affected: {result}");
-            return query;
-        }
+        
 
         public void Dispose()
         {
@@ -118,6 +133,22 @@ namespace Northwnd
         public void ExecuteQuery(string query)
         {
             var command = new SqlCommand(query, _connection);
+            var reader = command.ExecuteReader();
+            ShowFromReader(reader);
+            reader.Close();
+        }
+
+        public void ExecuteQuery(string query, Dictionary<string, object> param = null)
+        {
+            var command = new SqlCommand(query, _connection);
+            if (param != null)
+            {
+                foreach (var item in param)
+                {
+                    command.Parameters.AddWithValue(item.Key, item.Value);
+                }
+            }
+
             var reader = command.ExecuteReader();
             ShowFromReader(reader);
             reader.Close();
