@@ -76,23 +76,9 @@ namespace Northwnd
             return query;
         }
 
-        public string Q14()
+        public string Q19(string country="France", int count =10)
         {
-            var query = "SELECT e.FirstName, e.LastName, COUNT(o.OrderID) Count FROM Employees e LEFT JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.OrderDate >= '19970101' AND o.OrderDate <= '19971231' GROUP BY e.FirstName, e.LastName";
-            ExecuteQuery(query);
-            return query;
-        }
-
-        public string Q15()
-        {
-            var query = "SELECT e.FirstName, e.LastName, COUNT(o.OrderID) Count FROM Employees e JOIN Orders o ON e.EmployeeID = o.EmployeeID AND o.OrderDate >= '19970101' AND o.OrderDate <= '19971231' GROUP BY e.FirstName, e.LastName";
-            ExecuteQuery(query);
-            return query;
-        }
-
-        public string Q19(string country="France")
-        {
-            var query = $"SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = '{country}' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > 10";
+            var query = $"SELECT DISTINCT c.ContactName FROM Customers c JOIN Orders o ON c.CustomerID = o.CustomerID AND c.Country = '{country}' WHERE (SELECT COUNT(*) FROM Orders oo WHERE oo.CustomerID = c.CustomerID) > {count}";
             ExecuteQuery(query);
             return query;
         }
@@ -104,9 +90,9 @@ namespace Northwnd
             return query;
         }
 
-        public string Q33(string city="Lviv")
+        public string Q33(string city="Lviv", int id=1)
         {
-            var query = $"UPDATE Employees SET City = '{city}' WHERE EmployeeID = 1";
+            var query = $"UPDATE Employees SET City = '{city}' WHERE EmployeeID = {id}";
             var command = new SqlCommand(query, _connection);
             var result = command.ExecuteNonQuery();
 
@@ -114,9 +100,9 @@ namespace Northwnd
             return query;
         }
 
-        public string Q35()
+        public string Q35(int id = 2)
         {
-            var query = "DELETE FROM Employees WHERE EmployeeID = 2";
+            var query = "DELETE FROM Employees WHERE EmployeeID = {id}";
             var command = new SqlCommand(query, _connection);
             var result = command.ExecuteNonQuery();
 
