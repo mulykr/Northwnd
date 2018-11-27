@@ -38,7 +38,7 @@ namespace Northwnd
 
         public string Q5(string city = "London")
         {
-            var query = $"SELECT COUNT(*) FROM Employees WHERE City='{city}'";
+            var query = $"SELECT COUNT(*) AS Count FROM Employees WHERE City='{city}'";
             ExecuteQuery(query);
             return query;
         }

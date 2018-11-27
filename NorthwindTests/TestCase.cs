@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Northwnd;
+using System.Linq;
+using System;
 
 namespace NorthwindTests
 {
@@ -32,15 +34,34 @@ namespace NorthwindTests
             var q = _queries.Q2();
             var res = ExecuteQuery(q, "LastName", "FirstName");
             Assert.AreEqual(4, res.Count);
-            var result = new Dictionary<object, object>();
-            result.Add("Buchanan", "Steve");
-            result.Add("Suyama", "Michael");
-            result.Add("King", "Robert");
-            result.Add("DodsWorth", "Anne");
-            Assert.AreEqual(res,result);
-            //NORTHWND_QA
+            Assert.AreEqual(res["Buchanan"], "Steven");
+            Assert.AreEqual(res["Suyama"], "Michael");
+            Assert.AreEqual(res["King"], "Robert");
+            Assert.AreEqual(res["Dodsworth"], "Anne");
         }
 
+        [TestMethod]
+        public void Q3()
+        {
+            var q = _queries.Q3();
+            var res = ExecuteQuery(q, "LastName", "FirstName");
+            Assert.AreEqual(2, res.Count);
+            Assert.AreEqual(res["Fuller"], "Andrew");
+            Assert.AreEqual(res["Dodsworth"], "Anne");
+           
+        }
+
+        //[TestMethod]
+        //public void Q5()
+        //{
+        //    var q = _queries.Q5();
+           
+        //    var res = ExecuteQuery(q);
+
+        //   // var res = GetRowsAffected(q);
+
+        //    Assert.AreEqual(4, res);
+        //}
         public List<object> ExecuteQuery(string query, string ordinal)
         {
             var command = new SqlCommand(query, _connection);
@@ -53,6 +74,29 @@ namespace NorthwindTests
 
             return objs;
         }
+        //public int ExecuteQuery(string query)
+        //{
+        //    var command = new SqlCommand(query, _connection);
+        //    var reader = command.ExecuteReader();
+        //    var objs = new List<object>();
+        //    int y = 0;
+        //    var h;
+        //    while (reader.Read())
+        //    {
+        //       h=reader.GetValue(reader.GetOrdinal("Count"));
+
+        //    }
+        //    y=Int32.Parse(h);
+        //    return y;
+        //}
+        //public var ExecuteQuery(string query)
+        //{
+        //    var command = new SqlCommand(query, _connection);
+        //    var reader = command.ExecuteReader();
+        //    var objs = reader.GetValue();
+        //    return objs;
+
+        //}
 
         public Dictionary<object,object> ExecuteQuery(string query, string ordinal, string ordinal2)
         {
@@ -61,7 +105,7 @@ namespace NorthwindTests
             var objs = new Dictionary<object,object>();
             while (reader.Read())
             {
-                objs.Add(reader.GetValue(reader.GetOrdinal(ordinal)),reader.GetOrdinal(ordinal2));
+                objs.Add(reader.GetValue(reader.GetOrdinal(ordinal)), reader.GetValue(reader.GetOrdinal(ordinal2)));
             }
 
             return objs;
